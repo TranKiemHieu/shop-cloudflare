@@ -1,4 +1,4 @@
-name = "fashion-store-api"
+name = "shop-cloudflare"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
@@ -9,4 +9,4 @@ ENVIRONMENT = "development"
 [[d1_databases]]
 binding = "DB"
 database_name = "fashion-store-db"
-database_id = "placeholder-replace-after-db-create"
+database_id = "ffc5ca39-0c82-4a41-95ec-ae53c7afb798"
