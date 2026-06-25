@@ -175,7 +175,7 @@ export default function ProductCard({ product }: Props) {
         }
       `}</style>
 
-      <Link href={`/products/${product.id}`} className="product-card">
+      <Link href={`/products/detail?id=${product.id}`} className="product-card">
         <div className="product-img-wrap">
           {product.image_data ? (
             <img src={product.image_data} alt={product.name} loading="lazy" />

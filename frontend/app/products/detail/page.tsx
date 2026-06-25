@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { productsApi, Product, formatPrice, parseSizes, getDiscount } from "@/lib/api";
 import { addToCart } from "@/lib/cart";
 import Link from "next/link";
 
-export default function ProductDetailPage() {
-  const { id } = useParams<{ id: string }>();
+function ProductDetailContent() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -17,6 +18,10 @@ export default function ProductDetailPage() {
   const [sizeError, setSizeError] = useState(false);
 
   useEffect(() => {
+    if (!id) {
+      setLoading(false);
+      return;
+    }
     productsApi.get(parseInt(id)).then((r) => {
       setProduct(r.data ?? null);
       const sizes = parseSizes(r.data?.sizes ?? "[]");
@@ -61,7 +66,7 @@ export default function ProductDetailPage() {
     );
   }
 
-  if (!product) {
+  if (!product || !id) {
     return (
       <div className="container" style={{ textAlign: "center", padding: "120px 24px" }}>
         <h2 style={{ fontFamily: "Playfair Display, serif", color: "var(--text-secondary)" }}>
@@ -434,5 +439,23 @@ export default function ProductDetailPage() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function ProductDetailPage() {
+  return (
+    <Suspense fallback={
+      <div className="container" style={{ padding: "80px 24px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px" }}>
+          <div className="skeleton" style={{ aspectRatio: "3/4", borderRadius: "var(--radius-lg)" }} />
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px", paddingTop: "20px" }}>
+            <div className="skeleton" style={{ height: "40px", width: "100%" }} />
+            <div className="skeleton" style={{ height: "20px", width: "60%" }} />
+          </div>
+        </div>
+      </div>
+    }>
+      <ProductDetailContent />
+    </Suspense>
   );
 }
