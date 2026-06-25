@@ -17,7 +17,7 @@ app.use(
       const allowed = c.env.ALLOW_ORIGIN || '*';
       if (allowed === '*') return origin;
 
-      const allowedOrigins = allowed.split(',').map((o) => o.trim());
+      const allowedOrigins = allowed.split(',').map((o: string) => o.trim());
       if (allowedOrigins.includes(origin)) return origin;
 
       // Allow localhost/127.0.0.1 dynamically for local development convenience
