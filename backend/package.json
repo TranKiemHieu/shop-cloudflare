@@ -1,0 +1,22 @@
+{
+  "name": "fashion-store-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create fashion-store-db",
+    "db:init": "wrangler d1 execute fashion-store-db --local --file=schema.sql",
+    "db:init:remote": "wrangler d1 execute fashion-store-db --file=schema.sql",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.4.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240524.0",
+    "@types/node": "^26.0.1",
+    "typescript": "^5.4.5",
+    "wrangler": "^3.60.0"
+  }
+}
