@@ -4,6 +4,7 @@
 
 export interface Env {
   DB: D1Database;
+  ALLOW_ORIGIN?: string;
 }
 
 export interface Category {

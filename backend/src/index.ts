@@ -13,7 +13,20 @@ app.use('*', logger());
 app.use(
   '/api/*',
   cors({
-    origin: ['http://localhost:3000', 'https://*.pages.dev', '*'],
+    origin: (origin, c) => {
+      const allowed = c.env.ALLOW_ORIGIN || '*';
+      if (allowed === '*') return origin;
+
+      const allowedOrigins = allowed.split(',').map((o) => o.trim());
+      if (allowedOrigins.includes(origin)) return origin;
+
+      // Allow localhost/127.0.0.1 dynamically for local development convenience
+      if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+        return origin;
+      }
+
+      return null;
+    },
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
     maxAge: 86400,
