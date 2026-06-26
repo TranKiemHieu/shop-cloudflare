@@ -8,5 +8,5 @@ ENVIRONMENT = "development"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "fashion-store-db"
-database_id = "ffc5ca39-0c82-4a41-95ec-ae53c7afb798"
+database_name = "shop-database"
+database_id = "e0a7528a-c081-4668-9f1a-9fa67365619e"
